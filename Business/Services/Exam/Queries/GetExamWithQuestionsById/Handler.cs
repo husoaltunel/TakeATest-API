@@ -28,26 +28,26 @@ namespace Business.Services.Exam.Queries.GetExamWithQuestionsById
         {
             using (var unitOfWork = UnitOfWorkUtil.GetUnitOfWork(Connection))
             {
-                var exam = await unitOfWork.DbContext.Exams.GetByIdAsync(request.Id);
+                var exam = await unitOfWork.DbContext.Exams.GetByIdAsync(request.Id);           
 
                 if (!ResultUtil<Entities.Entities.Exam>.IsDataExist(exam))
                 {
                     return new ErrorDataResult<ExamWithQuestionsDto>();
                 }
-
+                var mappedExam = _mapper.Map<ExamWithQuestionsDto>(exam);
                 var questionsResult = await unitOfWork.DbContext.Questions.GetQuestionsByExamId(request.Id);
 
                 if (ResultUtil<IEnumerable<Entities.Entities.Question>>.IsDataExist(questionsResult))
                 {
-                    var questions = questionsResult.ToList();
-                    foreach (var question in questions)
+                    var mappedQuestions = questionsResult.Select(question => _mapper.Map<QuestionDto>(question)).ToList();
+                    foreach (var question in mappedQuestions)
                     {
                         var options = await unitOfWork.DbContext.Options.GetOptionsByQuestionId(question.Id);
-                        question.Options = options.ToList();
+                        question.Options = options.Select(option => _mapper.Map<OptionDto>(option)).ToList();
                     }
-                    exam.Questions = questions;
+                    mappedExam.Questions = mappedQuestions;
                 }
-                var mappedExam = _mapper.Map<ExamWithQuestionsDto>(exam);
+                
                 return new SuccessDataResult<ExamWithQuestionsDto>(mappedExam);
 
 

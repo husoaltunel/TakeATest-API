@@ -15,11 +15,31 @@ namespace DataAccess.UnitOfWorks
         {
             Connection = dbConnection;
         }
-        public DapperDbContext DbContext => new DapperDbContext(Connection);
+        public DapperDbContext DbContext => new DapperDbContext(Connection, Transaction);
 
+        public void OpenConnection()
+        {
+            if (Connection.State != ConnectionState.Open)
+            {
+                Connection.Open();
+            }
+
+        }
+        public void BeginTransaction()
+        {
+            Transaction = Connection.BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+        public void Commit()
+        {
+            Transaction.Commit();
+        }
+        public void Rollback()
+        {
+            Transaction.Rollback();
+        }
         public void Dispose()
         {
-            
+
         }
     }
 }

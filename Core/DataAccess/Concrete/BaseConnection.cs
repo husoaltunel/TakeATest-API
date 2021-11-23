@@ -9,5 +9,6 @@ namespace Core.DataAccess.Concrete
     public class BaseConnection : IConnection
     {
         public IDbConnection Connection { get; set; }
+        public IDbTransaction Transaction { get; set; }
     }
 }

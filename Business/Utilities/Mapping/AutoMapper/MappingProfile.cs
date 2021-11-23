@@ -31,8 +31,12 @@ namespace Business.Utilities.Mapping.AutoMapper
                 opt => opt.MapFrom(src => DateTime.Now.ToString())
                 );
             CreateMap<Exam, ExamWithQuestionsDto>();
-            CreateMap<Question, QuestionDto>();
-            CreateMap<Option, OptionDto>();
+            CreateMap<ExamWithQuestionsDto,Exam>().ForMember(
+                dest => dest.Date,
+                opt => opt.MapFrom(src => DateTime.Now.ToString())
+                );
+            CreateMap<Question, QuestionDto>().ReverseMap();
+            CreateMap<Option, OptionDto>().ReverseMap();
             CreateMap<Role, RoleDto>();
             CreateMap<OperationClaim,OperationClaimDto>();
         }

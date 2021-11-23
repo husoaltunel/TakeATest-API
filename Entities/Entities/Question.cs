@@ -10,6 +10,5 @@ namespace Entities.Entities
     {
         public string Text { get; set; }
         public long ExamId { get; set; }
-        public List<Option> Options { get;set;}
     }
 }

@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.Dapper.Repositories
 {
     public class OptionRepository : DapperBaseRepository<Option> , IOptionRepository
     {
-        public OptionRepository(IDbConnection dbConnection) : base(dbConnection)
+        public OptionRepository(IDbConnection dbConnection,IDbTransaction transaction) : base(dbConnection,transaction)
         {
 
         }

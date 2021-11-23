@@ -1,4 +1,5 @@
-﻿using Business.Services.Exam.Queries.GetExamById;
+﻿using Business.Services.Exam.Commands.InsertExamWithQuestions;
+using Business.Services.Exam.Queries.GetExamById;
 using Business.Services.Exam.Queries.GetExams;
 using Business.Services.Exam.Queries.GetExamWithQuestionsById;
 using MediatR;
@@ -36,6 +37,12 @@ namespace API.Controllers
         public async Task<IActionResult> GetWithQuestionsById(long id)
         {
             return Ok(await _mediator.Send(new GetExamWithQuestionsByIdQuery(){Id = id }));
+        }
+
+        [HttpPost("insert-with-questions")]
+        public async Task<IActionResult> InsertWithQuestionsAsync(InsertExamWithQuestionsCommand model)
+        {
+            return Ok(await _mediator.Send(model));
         }
 
         

@@ -10,7 +10,7 @@ namespace DataAccess.Concrete.Dapper.Repositories
 {
     public class UserRepository : DapperBaseRepository<User>, IUserRepository
     {
-        public UserRepository(IDbConnection dbConnection) : base(dbConnection)
+        public UserRepository(IDbConnection dbConnection, IDbTransaction transaction) : base(dbConnection,transaction)
         {
 
         }

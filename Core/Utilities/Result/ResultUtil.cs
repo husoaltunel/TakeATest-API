@@ -23,7 +23,16 @@ namespace Core.Utilities.Result
             }
             return false;
         }
+        public static bool IsResultSuccees(long result)
+        {
+            if (result != 0)
+            {
+                return true;
+            }
+            return false;
+        }
 
-        
+
+
     }
 }

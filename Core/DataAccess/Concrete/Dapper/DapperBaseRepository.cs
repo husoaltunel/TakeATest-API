@@ -14,15 +14,16 @@ namespace Core.DataAccess.Concrete.Dapper
     public class DapperBaseRepository<TEntity> : BaseConnection, IRepository<TEntity> where TEntity : IEntity, new()
     {
         private string entityName;
-        public DapperBaseRepository(IDbConnection dbConnection)
+        public DapperBaseRepository(IDbConnection dbConnection, IDbTransaction transaction)
         {
             Connection = dbConnection;
+            Transaction = transaction;
             entityName = typeof(TEntity).Name;
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await Connection.QueryAsync<TEntity>($@"select * from ""{entityName}s"" ");
+            return await Connection.QueryAsync<TEntity>($@"select * from ""{entityName}s"" ",transaction:Transaction);
         }
 
         public async Task<IEnumerable<TEntity>> GetByFilterAsync(Func<TEntity, bool> filter)
@@ -32,20 +33,20 @@ namespace Core.DataAccess.Concrete.Dapper
         public async Task<TEntity> GetByIdAsync(long id)
         {
 
-            return await Connection.QuerySingleOrDefaultAsync<TEntity>($@"select * from ""{entityName}s"" where ""Id"" = id", new { id });
+            return await Connection.QuerySingleOrDefaultAsync<TEntity>($@"select * from ""{entityName}s"" where ""Id"" = @id", new { id }, transaction: Transaction);
         }
-        public async Task<int> InsertAsync(TEntity entity)
+        public async Task<long> InsertAsync(TEntity entity)
         {
-            return await Connection.ExecuteAsync(SqlQueryUtil<TEntity>.GenerateGenericInsertQuery(entity, entityName), entity);
+            return await Connection.QuerySingleAsync<long>(SqlQueryUtil<TEntity>.GenerateGenericInsertQuery(entity, entityName), entity, transaction: Transaction);
         }
 
-        public async Task<int> UpdateAsync(TEntity entity)
+        public async Task<long> UpdateAsync(TEntity entity)
         {
-            return await Connection.ExecuteAsync(SqlQueryUtil<TEntity>.GenerateGenericUpdateQuery(entity, entityName), entity);
+            return await Connection.QuerySingleAsync<long>(SqlQueryUtil<TEntity>.GenerateGenericUpdateQuery(entity, entityName), entity, transaction: Transaction);
         }
-        public async Task<int> DeleteAsync(long id)
+        public async Task<long> DeleteAsync(long id)
         {
-            return await Connection.ExecuteAsync($@"delete from ""{entityName}s"" where ""Id"" = {id}");
+            return await Connection.ExecuteAsync($@"delete from ""{entityName}s"" where ""Id"" = @id",new {id=id }, transaction: Transaction);
         }
 
     }

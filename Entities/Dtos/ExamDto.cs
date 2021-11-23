@@ -12,5 +12,6 @@ namespace Entities.Dtos
         public string Text { get; set; }
         public int IsActive { get; set; }
         public string Date { get; set; }
+        public List<QuestionDto> Questions { get; set; }
     }
 }

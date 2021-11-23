@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Services\Article\Commands\" />
-    <Folder Include="Services\Exam\Commands\" />
     <Folder Include="Services\OperationClaim\Commands\" />
     <Folder Include="Services\Option\Commands\" />
     <Folder Include="Services\Question\Commands\" />

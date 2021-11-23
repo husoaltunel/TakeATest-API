@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.Dapper.Repositories
     public class ExamRepository : DapperBaseRepository<Exam>, IExamRepository
     {
 
-        public ExamRepository(IDbConnection dbConnection) : base(dbConnection)
+        public ExamRepository(IDbConnection dbConnection,IDbTransaction transaction) : base(dbConnection,transaction)
         {
    
         }

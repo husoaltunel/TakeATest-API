@@ -10,8 +10,8 @@ namespace Core.DataAccess.Abstract
         public Task<IEnumerable<TEntity>> GetByFilterAsync(Func<TEntity,bool> filter);
         public Task<TEntity> GetByIdAsync(long id);
         public Task<IEnumerable<TEntity>> GetAllAsync();
-        public Task<int> InsertAsync(TEntity entity);
-        public Task<int> UpdateAsync(TEntity entity);
-        public Task<int> DeleteAsync(long id);
+        public Task<long> InsertAsync(TEntity entity);
+        public Task<long> UpdateAsync(TEntity entity);
+        public Task<long> DeleteAsync(long id);
     }
 }

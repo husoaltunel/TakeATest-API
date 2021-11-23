@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.Dapper.Repositories
 {
     public class QuestionRepository : DapperBaseRepository<Question>, IQuestionRepository
     {
-        public QuestionRepository(IDbConnection dbConnection) : base(dbConnection)
+        public QuestionRepository(IDbConnection dbConnection, IDbTransaction transaction) : base(dbConnection,transaction)
         {
 
         }

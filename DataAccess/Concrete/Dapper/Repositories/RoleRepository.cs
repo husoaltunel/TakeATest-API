@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.Dapper.Repositories
 {
     public class RoleRepository : DapperBaseRepository<Role>, IRoleRepository
     {
-        public RoleRepository(IDbConnection dbConnection) : base(dbConnection)
+        public RoleRepository(IDbConnection dbConnection, IDbTransaction transaction) : base(dbConnection,transaction)
         {
 
         }

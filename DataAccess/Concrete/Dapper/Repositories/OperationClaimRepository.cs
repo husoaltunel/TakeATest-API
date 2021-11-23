@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.Dapper.Repositories
 {
     public class OperationClaimRepository : DapperBaseRepository<OperationClaim>, IOperationClaimRepository
     {
-        public OperationClaimRepository(IDbConnection dbConnection) : base(dbConnection)
+        public OperationClaimRepository(IDbConnection dbConnection,IDbTransaction transaction) : base(dbConnection,transaction)
         {
 
         }
