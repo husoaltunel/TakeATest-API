@@ -33,15 +33,15 @@ namespace Business.Services.Article.Queries.GetArticles
             
             List<ArticleDto> articles = new List<ArticleDto>();
 
-            try
+            try  
             {
-                var headers = document.DocumentNode.SelectNodes("//li[contains(@class,'card-component__description')]//h2");
-                var liElementsHasATag = document.DocumentNode.SelectNodes("//li[contains(@class,'card-component__description')]");
+                var headers = document.DocumentNode.SelectNodes("//div[contains(@class,'SummaryCollageEightGridItemList-drfwxm')]//h2");
+                var liElementsHasATag = document.DocumentNode.SelectNodes("//div[contains(@class,'SummaryCollageEightGridItemList-drfwxm')]//div[contains(@class,'summary-item__content')]");
 
                 for (int i = 0; i < 5; i++)
                 {
 
-                    html = client.DownloadString(string.Concat(url, liElementsHasATag[i + 1].FirstChild.GetAttributeValue("href", "")));
+                    html = client.DownloadString(string.Concat(url, liElementsHasATag[i].FirstChild.GetAttributeValue("href", "")));
                     document = new HtmlDocument();
                     document.LoadHtml(html);
 
@@ -54,7 +54,7 @@ namespace Business.Services.Article.Queries.GetArticles
 
                     articles.Add(new ArticleDto()
                     {
-                        Title = headers[i + 1].InnerText,
+                        Title = headers[i].InnerText,
                         Text = articleTexts.ToString()
                     });
                 }
