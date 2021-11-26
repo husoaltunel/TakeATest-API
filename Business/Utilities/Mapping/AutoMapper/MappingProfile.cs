@@ -29,16 +29,24 @@ namespace Business.Utilities.Mapping.AutoMapper
                 .ForMember(
                 dest => dest.Date,
                 opt => opt.MapFrom(src => DateTime.Now.ToString())
+                )
+                .ForMember(
+                dest => dest.IsActive,
+                opt => opt.MapFrom(src => 1)
                 );
             CreateMap<Exam, ExamWithQuestionsDto>();
-            CreateMap<ExamWithQuestionsDto,Exam>().ForMember(
+            CreateMap<ExamWithQuestionsDto, Exam>().ForMember(
                 dest => dest.Date,
                 opt => opt.MapFrom(src => DateTime.Now.ToString())
+                )
+                 .ForMember(
+                dest => dest.IsActive,
+                opt => opt.MapFrom(src => 1)
                 );
             CreateMap<Question, QuestionDto>().ReverseMap();
             CreateMap<Option, OptionDto>().ReverseMap();
             CreateMap<Role, RoleDto>();
-            CreateMap<OperationClaim,OperationClaimDto>();
+            CreateMap<OperationClaim, OperationClaimDto>();
         }
     }
 }

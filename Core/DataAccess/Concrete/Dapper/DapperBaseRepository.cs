@@ -21,7 +21,7 @@ namespace Core.DataAccess.Concrete.Dapper
             entityName = typeof(TEntity).Name;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await Connection.QueryAsync<TEntity>($@"select * from ""{entityName}s"" ",transaction:Transaction);
         }
@@ -30,7 +30,7 @@ namespace Core.DataAccess.Concrete.Dapper
         {
             return await Task.FromResult(GetAllAsync().Result.Where(filter));
         }
-        public async Task<TEntity> GetByIdAsync(long id)
+        public virtual async Task<TEntity> GetByIdAsync(long id)
         {
 
             return await Connection.QuerySingleOrDefaultAsync<TEntity>($@"select * from ""{entityName}s"" where ""Id"" = @id", new { id }, transaction: Transaction);
@@ -44,7 +44,7 @@ namespace Core.DataAccess.Concrete.Dapper
         {
             return await Connection.QuerySingleAsync<long>(SqlQueryUtil<TEntity>.GenerateGenericUpdateQuery(entity, entityName), entity, transaction: Transaction);
         }
-        public async Task<long> DeleteAsync(long id)
+        public virtual async Task<long> DeleteAsync(long id)
         {
             return await Connection.ExecuteAsync($@"delete from ""{entityName}s"" where ""Id"" = @id",new {id=id }, transaction: Transaction);
         }

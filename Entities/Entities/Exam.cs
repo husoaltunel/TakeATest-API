@@ -8,6 +8,7 @@ namespace Entities.Entities
 {
     public class Exam : BaseEntity, IEntity
     {
+
         public string Title { get; set; }
         public string Text { get; set; }
         public int IsActive { get; set; }

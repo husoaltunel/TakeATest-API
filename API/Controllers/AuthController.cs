@@ -2,6 +2,7 @@
 using Business.Services.Auth.Queries.Login;
 using Entities.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,6 +30,18 @@ namespace API.Controllers
         public async Task<IActionResult> Register(RegisterCommand model)
         {
             return Ok(await _mediator.Send(model));
+        }
+        [Authorize]
+        [HttpGet("is-logged-in")]
+        public IActionResult IsLoggedIn()
+        {
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("is-admin")]
+        public IActionResult IsAdmin()
+        {
+            return Ok();
         }
     }
 }
