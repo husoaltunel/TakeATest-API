@@ -24,7 +24,7 @@ namespace Business.IOC.Autofac
             builder.Register<IDbConnection>(connection => new SQLiteConnection(_configuration.GetConnectionString("SqliteConnectionString")));
             builder.RegisterType<HashingHelper>().As<IHashingHelper>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
-
+            
             base.Load(builder);
         }
     }
